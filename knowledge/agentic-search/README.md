@@ -17,7 +17,7 @@ This tutorial compares the two approaches, then builds an agentic search system 
 5. [`5-structured-output.py`](./5-structured-output.py). A structured answer with citations.
 6. [`6-production.py`](./6-production.py). The same tool interface with safer production defaults.
 
-Background docs live in [`docs/`](./docs/): start with [`docs/rag-vs-agentic.md`](./docs/1-rag-vs-agentic.md), then use [`docs/python-patterns.md`](./docs/python-patterns.md) as a Python reference while reading the code.
+Background docs live in [`docs/`](./docs/): start with [`docs/rag-vs-agentic.md`](./docs/rag-vs-agentic.md), then use [`docs/python-patterns.md`](./docs/python-patterns.md) as a Python reference while reading the code.
 
 ## The loop
 
