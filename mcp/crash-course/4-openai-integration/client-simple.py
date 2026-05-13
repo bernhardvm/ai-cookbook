@@ -1,3 +1,4 @@
+import os
 import asyncio
 import json
 from contextlib import AsyncExitStack
@@ -7,7 +8,8 @@ import nest_asyncio
 from dotenv import load_dotenv
 from mcp import ClientSession, StdioServerParameters
 from mcp.client.stdio import stdio_client
-from openai import AsyncOpenAI
+#from openai import AsyncOpenAI
+from openai import AsyncAzureOpenAI
 
 # Apply nest_asyncio to allow nested event loops (needed for Jupyter/IPython)
 nest_asyncio.apply()
@@ -18,8 +20,17 @@ load_dotenv("../.env")
 # Global variables to store session state
 session = None
 exit_stack = AsyncExitStack()
-openai_client = AsyncOpenAI()
-model = "gpt-4o"
+#openai_client = AsyncOpenAI()
+AZURE_OPENAI_API_KEY = os.getenv("AZURE_OPENAI_API_KEY")
+AZURE_OPENAI_ENDPOINT = os.getenv("AZURE_OPENAI_ENDPOINT")
+AZURE_API_VERSION = os.getenv("AZURE_API_VERSION")
+AZURE_DEPLOYMENT_NAME = os.getenv("AZURE_DEPLOYMENT_NAME")
+openai_client = AsyncAzureOpenAI(
+    api_key=AZURE_OPENAI_API_KEY,
+    api_version=AZURE_API_VERSION,
+    azure_endpoint=AZURE_OPENAI_ENDPOINT,
+)
+#model = "gpt-4o"
 stdio = None
 write = None
 
@@ -91,7 +102,7 @@ async def process_query(query: str) -> str:
 
     # Initial OpenAI API call
     response = await openai_client.chat.completions.create(
-        model=model,
+        model=AZURE_DEPLOYMENT_NAME,
         messages=[{"role": "user", "content": query}],
         tools=tools,
         tool_choice="auto",
@@ -127,7 +138,7 @@ async def process_query(query: str) -> str:
 
         # Get final response from OpenAI with tool results
         final_response = await openai_client.chat.completions.create(
-            model=model,
+            model=AZURE_DEPLOYMENT_NAME,
             messages=messages,
             tools=tools,
             tool_choice="none",  # Don't allow more tool calls
