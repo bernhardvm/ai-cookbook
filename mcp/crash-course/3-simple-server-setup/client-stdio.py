@@ -3,8 +3,7 @@ import nest_asyncio
 from mcp import ClientSession, StdioServerParameters
 from mcp.client.stdio import stdio_client
 
-nest_asyncio.apply()  # Needed to run interactive python
-
+#nest_asyncio.apply()  # Needed to run interactive python
 
 async def main():
     # Define server parameters

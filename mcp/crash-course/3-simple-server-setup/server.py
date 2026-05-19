@@ -7,7 +7,7 @@ load_dotenv("../.env")
 mcp = FastMCP(
     name="Calculator",
     host="0.0.0.0",  # only used for SSE transport (localhost)
-    port=8050,  # only used for SSE transport (set this to any port)
+    port=3001,  # only used for SSE transport (set this to any port)
     stateless_http=True,
 )
 
